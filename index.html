@@ -4,78 +4,428 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>연봉 계산기 | 실수령액/세전·세후 간편 계산</title>
-  <meta name="description" content="세전/세후 연봉을 빠르게 계산하고 월 실수령액을 확인할 수 있는 웹 연봉 계산기입니다. 버튼을 눌러 Streamlit 앱을 실행하세요." />
+  <title>급여 계산기 | 월급·시급·연차·일할·휴무자 급여 계산</title>
+  <meta name="description" content="월급 계산, 시급 계산, 연차(유급휴가) 급여, 월급 일할 계산, 월 휴무자 급여 계산을 한 번에. 버튼 눌러 계산기 실행!" />
 
-  <!-- Open Graph (네이버/카톡/메신저 공유 미리보기용) -->
-  <meta property="og:title" content="연봉 계산기 (Streamlit 앱)" />
-  <meta property="og:description" content="세전·세후/월 실수령액을 간편 계산. 랜딩페이지에서 앱 실행!" />
+  <!-- Open Graph (공유 미리보기) -->
+  <meta property="og:title" content="급여 계산기 (월급·시급·연차·일할·휴무자)" />
+  <meta property="og:description" content="실무에 바로 쓰는 급여 계산 모음. 웹에서 빠르게 계산해보세요." />
   <meta property="og:type" content="website" />
-  <!-- og:image는 업로드한 이미지가 있으면 넣기 -->
-  <!-- <meta property="og:image" content="https://<아이디>.github.io/salarycalculator-landing/assets/hero.png" /> -->
+  <!-- 스크린샷 업로드하면 주석 해제하고 경로 수정 -->
+  <!-- <meta property="og:image" content="https://<아이디>.github.io/<repo>/assets/hero.png" /> -->
 
-  <!-- 구조화 데이터: SoftwareApplication -->
+  <meta name="theme-color" content="#0b1220" />
+
+  <!-- 구조화 데이터: WebApplication -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "연봉 계산기",
+    "@type": "WebApplication",
+    "name": "급여 계산기",
     "applicationCategory": "FinanceApplication",
     "operatingSystem": "Web",
-    "url": "https://salarycalculator-kbekyfkpt2ou49seszpxh7.streamlit.app/"
+    "url": "https://salarycalculator-kbekyfkpt2ou49seszpxh7.streamlit.app/",
+    "description": "월급/시급/연차/일할/휴무자 급여 계산을 웹에서 빠르게."
+  }
+  </script>
+
+  <!-- 구조화 데이터: FAQ (검색결과에 도움이 될 때가 있음) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"어떤 계산을 할 수 있나요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"월급 계산, 시급 계산, 연차(유급휴가) 급여 계산, 월급 일할 계산, 월 휴무자 급여 계산을 제공합니다."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"모바일에서도 사용 가능한가요?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"네. 웹앱이라 모바일/PC 브라우저에서 모두 사용 가능합니다."
+        }
+      }
+    ]
   }
   </script>
 
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 0; }
-    main { max-width: 860px; margin: 0 auto; padding: 28px 18px; line-height: 1.6; }
-    .btn { display: inline-block; padding: 12px 16px; border-radius: 10px; border: 1px solid #ddd; text-decoration: none; }
-    .card { border: 1px solid #eee; border-radius: 14px; padding: 16px; margin: 14px 0; }
-    img { max-width: 100%; border-radius: 14px; border: 1px solid #eee; }
+    :root{
+      --bg: #0b1220;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --border: rgba(255,255,255,.12);
+      --shadow: 0 12px 40px rgba(0,0,0,.35);
+      --r: 18px;
+      --r2: 24px;
+      --max: 1040px;
+    }
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(59,130,246,.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, rgba(168,85,247,.28), transparent 55%),
+        radial-gradient(1000px 700px at 50% 110%, rgba(34,197,94,.18), transparent 55%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    a{ color: inherit; text-decoration:none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 22px 18px 70px; }
+
+    /* Top bar */
+    .top{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 14px;
+      padding: 10px 0 16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap: 10px;
+      font-weight: 800; letter-spacing: -.02em;
+    }
+    .badge{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.18); }
+    .btn.primary{
+      border-color: rgba(59,130,246,.55);
+      background: linear-gradient(135deg, rgba(59,130,246,.95), rgba(168,85,247,.92));
+      box-shadow: 0 14px 45px rgba(59,130,246,.18);
+    }
+    .btn.primary:hover{ transform: translateY(-2px); }
+
+    /* Hero */
+    .hero{
+      position:relative;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 18px;
+      margin-top: 10px;
+      padding: 22px;
+      border-radius: var(--r2);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 260px at 12% 0%, rgba(59,130,246,.35), transparent 70%),
+        radial-gradient(520px 260px at 88% 0%, rgba(168,85,247,.28), transparent 70%);
+      filter: blur(10px);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .hero > *{ position:relative; }
+    .kicker{
+      display:inline-flex; align-items:center; gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      background: rgba(0,0,0,.18);
+      border: 1px solid var(--border);
+      padding: 6px 10px;
+      border-radius: 999px;
+      width: fit-content;
+    }
+    h1{
+      margin: 12px 0 10px;
+      font-size: clamp(28px, 4.2vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -.03em;
+    }
+    .sub{
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 58ch;
+    }
+    .cta{ display:flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+    .mini{
+      font-size: 13px; color: var(--muted); margin-top: 10px;
+    }
+
+    .preview{
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.20);
+      padding: 14px;
+      height: 100%;
+      min-height: 220px;
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+      justify-content: center;
+    }
+    .stat{
+      display:flex; align-items:flex-start; gap: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+    }
+    .icon{
+      width: 30px; height: 30px;
+      border-radius: 12px;
+      display:grid; place-items:center;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      flex: 0 0 auto;
+    }
+    .stat b{ display:block; font-size: 14px; margin-bottom: 2px; }
+    .stat span{ color: var(--muted); font-size: 13px; }
+
+    /* Sections */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .card{
+      padding: 16px;
+      border-radius: var(--r);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 10px 32px rgba(0,0,0,.18);
+      transition: transform .12s ease, background .12s ease;
+    }
+    .card:hover{ transform: translateY(-2px); background: rgba(255,255,255,.07); }
+    .card h3{ margin: 8px 0 6px; font-size: 16px; letter-spacing: -.02em; }
+    .card p{ margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
+
+    .section{
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: var(--r2);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+    }
+    .section h2{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -.02em;
+    }
+    .list{
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .footer{
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.60);
+      font-size: 12.5px;
+      display:flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Floating CTA on mobile */
+    .float{
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 14px;
+      display:none;
+      gap: 10px;
+      z-index: 20;
+    }
+    .float .btn{ width: 100%; }
+
+    @media (max-width: 920px){
+      .hero{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr; }
+      .float{ display:flex; }
+      .wrap{ padding-bottom: 110px; }
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      .btn,.card{ transition:none; }
+    }
   </style>
 </head>
+
 <body>
-  <main>
-    <h1>연봉 계산기 (Streamlit 앱)</h1>
-    <p>세전/세후 연봉, 월 실수령액 등을 빠르게 확인할 수 있는 웹 계산기입니다.</p>
-
-    <p>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <span aria-hidden="true">🧾</span>
+        <span>급여 계산기</span>
+        <span class="badge">월급 · 시급 · 연차 · 일할 · 휴무자</span>
+      </div>
       <a class="btn" href="https://salarycalculator-kbekyfkpt2ou49seszpxh7.streamlit.app/" target="_blank" rel="noopener">
-        앱 실행하기 →
+        계산기 열기 ↗
       </a>
-    </p>
-
-    <!-- 스크린샷이 있으면 넣기 -->
-    <!-- <img src="assets/hero.png" alt="연봉 계산기 화면 미리보기" /> -->
-
-    <div class="card">
-      <h2>주요 기능</h2>
-      <ul>
-        <li>세전/세후 변환</li>
-        <li>월 실수령액 계산</li>
-        <li>간단한 입력으로 결과 확인</li>
-      </ul>
     </div>
 
-    <div class="card">
+    <section class="hero">
+      <div>
+        <div class="kicker">빠르게 · 정확하게 · 실무용</div>
+        <h1>월급/시급/연차/일할/휴무자 급여,<br/>한 번에 계산하세요.</h1>
+        <p class="sub">
+          필요한 계산만 골라서 바로 결과를 확인할 수 있는 웹 계산기입니다.
+          복잡한 수식 대신, 입력 → 확인까지 깔끔하게.
+        </p>
+
+        <div class="cta">
+          <a class="btn primary" href="https://salarycalculator-kbekyfkpt2ou49seszpxh7.streamlit.app/" target="_blank" rel="noopener">
+            지금 계산 시작하기 →
+          </a>
+          <a class="btn" href="#features">어떤 기능이 있나요?</a>
+        </div>
+
+        <div class="mini">팁: 검색 노출은 이 랜딩페이지가 담당하고, 버튼으로 앱을 연결합니다.</div>
+      </div>
+
+      <aside class="preview" aria-label="기능 요약">
+        <div class="stat">
+          <div class="icon" aria-hidden="true">💰</div>
+          <div>
+            <b>월급 계산</b>
+            <span>월 급여/수당/공제 등 필요한 항목을 입력해 계산</span>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="icon" aria-hidden="true">⏱️</div>
+          <div>
+            <b>시급 계산</b>
+            <span>근무시간 기준으로 급여를 빠르게 산출</span>
+          </div>
+        </div>
+        <div class="stat">
+          <div class="icon" aria-hidden="true">🏖️</div>
+          <div>
+            <b>연차/일할/휴무자</b>
+            <span>연차 급여, 일할 계산, 월 휴무자 급여 계산까지</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="features" class="section" style="margin-top:18px;">
+      <h2>핵심 기능</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="icon" aria-hidden="true">💵</div>
+          <h3>월급 계산</h3>
+          <p>월 급여를 입력하고 상황에 맞게 계산합니다.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🕒</div>
+          <h3>시급 계산</h3>
+          <p>근무 시간 기반으로 급여를 손쉽게 산출합니다.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">📅</div>
+          <h3>연차 계산</h3>
+          <p>연차(유급휴가) 급여 계산에 필요한 값을 정리해 확인합니다.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🧮</div>
+          <h3>월급 일할 계산</h3>
+          <p>입·퇴사, 결근 등 월 중 변동 상황에서 일할 계산을 도와줍니다.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🧑‍💼</div>
+          <h3>월 휴무자 급여 계산</h3>
+          <p>월 휴무자(무급/유급 등) 급여를 케이스별로 계산합니다.</p>
+        </div>
+        <div class="card">
+          <div class="icon" aria-hidden="true">🚀</div>
+          <h3>웹에서 즉시 실행</h3>
+          <p>설치 없이 브라우저에서 바로 계산하고 공유할 수 있어요.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
       <h2>사용 방법</h2>
-      <ol>
-        <li>“앱 실행하기” 버튼 클릭</li>
-        <li>연봉/조건 입력</li>
-        <li>계산 결과 확인</li>
+      <ol class="list">
+        <li><b>지금 계산 시작하기</b> 버튼을 눌러 앱을 엽니다.</li>
+        <li>상단/사이드 메뉴에서 원하는 계산(월급/시급/연차/일할/휴무자)을 선택합니다.</li>
+        <li>값을 입력하면 결과가 즉시 반영됩니다.</li>
       </ol>
-    </div>
+      <div class="cta" style="margin-top:14px;">
+        <a class="btn primary" href="https://salarycalculator-kbekyfkpt2ou49seszpxh7.streamlit.app/" target="_blank" rel="noopener">앱 실행하기 →</a>
+        <a class="btn" href="#faq">FAQ 보기</a>
+      </div>
+    </section>
 
-    <div class="card">
-      <h2>FAQ</h2>
-      <p><b>Q.</b> 계산 결과는 저장되나요?<br/><b>A.</b> (당신 앱 정책에 맞게 작성)</p>
-      <p><b>Q.</b> 모바일에서도 되나요?<br/><b>A.</b> 웹앱이라 모바일 브라우저에서도 동작합니다.</p>
-    </div>
+    <section id="faq" class="section">
+      <h2>자주 묻는 질문</h2>
+      <div class="grid" style="grid-template-columns: 1fr; gap: 12px;">
+        <div class="card">
+          <h3>Q. 어떤 계산을 할 수 있나요?</h3>
+          <p>A. 월급 계산, 시급 계산, 연차(유급휴가) 급여 계산, 월급 일할 계산, 월 휴무자 급여 계산을 제공합니다.</p>
+        </div>
+        <div class="card">
+          <h3>Q. 모바일에서도 사용 가능한가요?</h3>
+          <p>A. 네. 웹앱이라 모바일/PC 브라우저에서 모두 사용 가능합니다.</p>
+        </div>
+        <div class="card">
+          <h3>Q. 계산 기준(공제/세율 등)은 어디서 바꾸나요?</h3>
+          <p>A. 앱 내부 설정/입력 항목에서 조정할 수 있게 구성하는 것을 권장합니다. (앱 UI에 맞춰 문구 수정 가능)</p>
+        </div>
+      </div>
+    </section>
 
-    <hr/>
-    <p style="font-size: 13px; color: #666;">
-      문의: (이메일/깃허브 링크 등) · 마지막 업데이트: 2025-12-18
-    </p>
-  </main>
+    <div class="footer">
+      <div>© <span id="y"></span> 급여 계산기 · 랜딩페이지</div>
+      <div>
+        <a class="btn" style="padding:8px 12px; border-radius: 12px;"
+           href="https://salarycalculator-kbekyfkpt2ou49seszpxh7.streamlit.app/" target="_blank" rel="noopener">앱 바로가기 ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile floating CTA -->
+  <div class="float" aria-label="빠른 실행">
+    <a class="btn primary" href="https://salarycalculator-kbekyfkpt2ou49seszpxh7.streamlit.app/" target="_blank" rel="noopener">
+      급여 계산기 열기 →
+    </a>
+  </div>
+
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
