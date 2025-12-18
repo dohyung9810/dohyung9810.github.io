@@ -1,1 +1,4 @@
+User-agent: *
+Allow: /
 
+Sitemap: https://dohyung9810.github.io/salarycalculator-landing/sitemap.xml
