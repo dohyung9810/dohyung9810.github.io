@@ -4,65 +4,102 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- ✅ 네이버 소유확인 태그 (그대로 유지) -->
   <meta name="naver-site-verification" content="a23be244f4d81a21c2f06baeafdf29d79cae92bc" />
 
-  <title>급여 계산기 | 월급·시급·연차·일할·휴무자 급여</title>
-  <meta name="description" content="월급 계산, 시급 계산, 연차 계산, 월급 일할 계산, 월 휴무자 급여 계산을 한 곳에서. 버튼 눌러 계산기 실행!" />
+  <title>2025 급여 계산기 | 연봉 실수령액·시급·연차·일할 계산기</title>
+  <meta name="description" content="2025년 최신 세율 반영! 월급 계산기, 시급 변환, 연차 수당, 월급 일할 계산 및 휴무자 급여까지. 복잡한 급여 계산을 웹에서 무료로 즉시 확인하세요." />
+  <meta name="keywords" content="급여계산기, 2025년연봉실수령액, 월급계산기, 시급계산기, 연차수당계산, 월급일할계산" />
+  <link rel="canonical" href="https://dohyung9810.github.io/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="스마트 급여 계산기 - 실무 필수 5종 지원" />
+  <meta property="og:description" content="월급, 시급, 연차, 일할 계산을 한 번에! 2025년 최신 기준 반영." />
+  <meta property="og:url" content="https://dohyung9810.github.io/" />
 
   <style>
-    body{ margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,"Apple SD Gothic Neo","Noto Sans KR",sans-serif; color:#111; background:#fff; }
-    .wrap{ max-width:860px; margin:0 auto; padding:28px 18px 60px; line-height:1.6; }
-    header{ display:flex; justify-content:space-between; align-items:center; gap:12px; margin-bottom:18px; }
-    .brand{ font-weight:800; }
-    a.btn{ display:inline-block; padding:10px 14px; border-radius:12px; border:1px solid #e6e6e6; text-decoration:none; color:#111; }
-    a.btn.primary{ background:#111; color:#fff; border-color:#111; }
-    .hero{ border:1px solid #e6e6e6; border-radius:14px; padding:18px; }
-    .sub{ color:#666; margin-top:6px; }
-    .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:14px; }
-    .card{ border:1px solid #e6e6e6; border-radius:14px; padding:14px; background:#fafafa; }
-    h1{ margin:0; font-size:28px; letter-spacing:-.02em; }
-    h2{ margin:18px 0 10px; font-size:18px; }
-    h3{ margin:0 0 6px; font-size:16px; }
-    p{ margin:0; }
-    ul,ol{ margin:0; padding-left:18px; color:#666; }
-    footer{ margin-top:22px; padding-top:14px; border-top:1px solid #eee; color:#666; font-size:12.5px; }
-    @media (max-width:720px){ .grid{ grid-template-columns:1fr; } header{ align-items:flex-start; } }
+    :root { --primary: #007AFF; --bg: #f5f7fa; --text: #2c3e50; }
+    body { margin:0; font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; color: var(--text); background: var(--bg); line-height: 1.6; }
+    .wrap { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+    .brand { font-size: 1.5rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
+    
+    .btn { display: inline-flex; align-items: center; padding: 12px 24px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: 0.3s; }
+    .btn.primary { background: var(--primary); color: #fff; box-shadow: 0 4px 14px rgba(0,122,255,0.3); }
+    .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,122,255,0.4); }
+
+    .hero { background: #fff; border-radius: 24px; padding: 40px; text-align: center; margin-bottom: 30px; border: 1px solid rgba(0,0,0,0.05); }
+    h1 { font-size: 2.2rem; margin: 0 0 15px; letter-spacing: -1px; line-height: 1.2; }
+    .sub { font-size: 1.1rem; color: #666; margin-bottom: 25px; }
+
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .card { background: #fff; border-radius: 18px; padding: 20px; border: 1px solid rgba(0,0,0,0.05); transition: 0.2s; }
+    .card:hover { border-color: var(--primary); }
+    .card h3 { margin: 0 0 8px; font-size: 1.1rem; color: var(--primary); }
+    .card p { font-size: 0.95rem; color: #555; margin: 0; }
+
+    .info-section { margin-top: 40px; background: #fff; border-radius: 24px; padding: 30px; }
+    .info-section h2 { font-size: 1.3rem; margin-bottom: 15px; }
+    .info-section ul { padding-left: 20px; }
+    .info-section li { margin-bottom: 10px; color: #444; }
+
+    footer { margin-top: 50px; text-align: center; font-size: 0.9rem; color: #888; border-top: 1px solid #ddd; padding-top: 20px; }
+    
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 1.8rem; }
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
     <header>
-      <div class="brand">급여 계산기</div>
+      <div class="brand">SalaryCalc</div>
       <a class="btn primary" href="https://salarycalculator-kbekyfkpt2ou49seszpxh7.streamlit.app/" target="_blank" rel="noopener">
-        계산기 열기 →
+        계산기 앱 실행하기
       </a>
     </header>
 
-    <div class="hero">
-      <h1>월급·시급·연차·일할·휴무자 급여, 한 번에</h1>
-      <p class="sub">실무에서 자주 쓰는 급여 계산을 웹에서 빠르게 확인하세요.</p>
-    </div>
+    <main>
+      <section class="hero">
+        <h1>2025 급여 계산기:<br>정확한 실수령액 확인</h1>
+        <p class="sub">연봉, 월급, 시급부터 연차 및 일할 계산까지<br>실무에 필요한 모든 계산을 한 번에 처리하세요.</p>
+        <p><strong>4대 보험 및 소득세 최신 기준 반영 완료</strong></p>
+      </section>
 
-    <h2>기능</h2>
-    <div class="grid">
-      <div class="card"><h3>월급 계산</h3><p>월 급여를 계산합니다.</p></div>
-      <div class="card"><h3>시급 계산</h3><p>근무시간 기준으로 급여를 계산합니다.</p></div>
-      <div class="card"><h3>연차 계산</h3><p>연차(유급휴가) 급여 계산을 도와줍니다.</p></div>
-      <div class="card"><h3>월급 일할 계산</h3><p>월 중 변동 상황의 일할 계산을 지원합니다.</p></div>
-      <div class="card"><h3>월 휴무자 급여 계산</h3><p>휴무 상황에 따른 급여를 계산합니다.</p></div>
-      <div class="card"><h3>웹에서 즉시 실행</h3><p>설치 없이 바로 실행합니다.</p></div>
-    </div>
+      <div class="grid">
+        <div class="card">
+          <h3>💰 월급/연봉 계산</h3>
+          <p>비과세 식대, 가족 수 등을 반영하여 실제 통장에 찍히는 금액을 계산합니다.</p>
+        </div>
+        <div class="card">
+          <h3>⏰ 시급-월급 변환</h3>
+          <p>주휴수당을 포함한 정확한 시급 기반 월 예상 급여를 산출합니다.</p>
+        </div>
+        <div class="card">
+          <h3>📅 연차 수당 계산</h3>
+          <p>미사용 연차에 대한 보상금을 근로기준법에 맞춰 계산해 드립니다.</p>
+        </div>
+        <div class="card">
+          <h3>⚖️ 일할 계산 (중도입사)</h3>
+          <p>한 달을 다 채우지 못한 경우, 근무 일수에 따른 정확한 급여를 확인하세요.</p>
+        </div>
+      </div>
 
-    <h2>사용 방법</h2>
-    <ol>
-      <li>상단 버튼으로 앱을 엽니다.</li>
-      <li>원하는 계산 메뉴를 선택합니다.</li>
-      <li>값을 입력하고 결과를 확인합니다.</li>
-    </ol>
+      <section class="info-section">
+        <h2>왜 이 계산기를 사용해야 하나요?</h2>
+        <ul>
+          <li><strong>정확성:</strong> 2025년 변경된 국민연금, 건강보험 요율이 적용되어 있습니다.</li>
+          <li><strong>편의성:</strong> 복잡한 수식 없이 숫자만 입력하면 즉시 결과가 도출됩니다.</li>
+          <li><strong>보안성:</strong> 입력하신 개인 급여 정보는 서버에 저장되지 않고 즉시 휘발됩니다.</li>
+        </ul>
+      </section>
+    </main>
 
-    <footer>© <span id="y"></span> 급여 계산기</footer>
+    <footer>
+      <p>© <span id="y"></span> 급여 계산기 서비스. All Rights Reserved.</p>
+    </footer>
   </div>
   <script>document.getElementById("y").textContent = new Date().getFullYear();</script>
 </body>
